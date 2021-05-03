@@ -76,6 +76,7 @@ func gameWin(game Game) int {
 		}
 	}
 
+	//diagonal R-L check
 	for i := 5; i >= 3; i-- {
 		for j := 6; j >= 3; j-- {
 			currentDiag := getDiagRL(game, i, j)
@@ -132,11 +133,19 @@ func main() {
 			fmt.Println("Player 1 turn")
 			fmt.Print("Column: ")
 			fmt.Scan(&place)
+			if place > 7 {
+				fmt.Println("Enter a column from 1-7")
+				continue
+			}
 			g = addPiece(place-1, "X", g)
 		} else {
 			fmt.Println("Player 2 turn")
 			fmt.Print("Column: ")
 			fmt.Scan(&place)
+			if place > 7 {
+				fmt.Println("Enter a column from 1-7")
+				continue
+			}
 			g = addPiece(place-1, "O", g)
 		}
 		printBoard(g)
