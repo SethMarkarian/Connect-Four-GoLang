@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 type Game struct {
-	board      [][]string
-	playerTurn int
+	board [][]string
+	done  bool
 }
 
 func createGame() Game {
@@ -12,7 +12,7 @@ func createGame() Game {
 	newGame.board = [][]string{
 		{"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"},
 	}
-	newGame.playerTurn = 1
+	newGame.done = false
 	return newGame
 }
 
@@ -34,8 +34,21 @@ func addPiece(index int, piece string, game Game) Game {
 
 func main() {
 	g := createGame()
-	g = addPiece(2, "x", g)
-	g = addPiece(3, "o", g)
-	g = addPiece(2, "x", g)
-	printBoard(g)
+	numTurns := 0
+	for !g.done {
+		place := 0
+		if numTurns%2 == 0 {
+			fmt.Println("Player 1 turn")
+			fmt.Print("Column: ")
+			fmt.Scan(&place)
+			g = addPiece(place-1, "X", g)
+		} else {
+			fmt.Println("Player 2 turn")
+			fmt.Print("Column: ")
+			fmt.Scan(&place)
+			g = addPiece(place-1, "O", g)
+		}
+		printBoard(g)
+		numTurns = numTurns + 1
+	}
 }
