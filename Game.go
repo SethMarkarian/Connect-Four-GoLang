@@ -75,6 +75,19 @@ func gameWin(game Game) int {
 			}
 		}
 	}
+
+	for i := 5; i >= 3; i-- {
+		for j := 6; j >= 3; j-- {
+			currentDiag := getDiagRL(game, i, j)
+			if compare(currentDiag, "X") {
+				game.done = true
+				return 1
+			} else if compare(currentDiag, "O") {
+				game.done = true
+				return 2
+			}
+		}
+	}
 	return -1
 }
 
@@ -101,6 +114,12 @@ func getVerticalLine(game Game, col int) []string {
 func getDiagLR(game Game, x int, y int) []string {
 	returnSlice := []string{}
 	returnSlice = append(returnSlice, game.board[x][y], game.board[x-1][y+1], game.board[x-2][y+2], game.board[x-3][y+3])
+	return returnSlice
+}
+
+func getDiagRL(game Game, x int, y int) []string {
+	returnSlice := []string{}
+	returnSlice = append(returnSlice, game.board[x][y], game.board[x-1][y-1], game.board[x-2][y-2], game.board[x-3][y-3])
 	return returnSlice
 }
 
