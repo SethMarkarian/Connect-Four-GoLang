@@ -22,6 +22,7 @@ func printBoard(game Game) {
 	for i := 0; i < 6; i++ {
 		fmt.Println(game.board[i])
 	}
+	fmt.Println(" 1 2 3 4 5 6 7")
 }
 
 func addPiece(index int, piece string, game Game) Game {
@@ -126,6 +127,7 @@ func getDiagRL(game Game, x int, y int) []string {
 
 func main() {
 	g := createGame()
+	printBoard(g)
 	numTurns := 0
 	for !g.done {
 		place := 0
