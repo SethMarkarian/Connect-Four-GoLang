@@ -5,8 +5,9 @@ import (
 )
 
 type Game struct {
-	board [][]string
-	done  bool
+	board          [][]string
+	piecesInColumn []int
+	done           bool
 }
 
 func createGame() Game {
@@ -15,6 +16,7 @@ func createGame() Game {
 		{"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"}, {"_", "_", "_", "_", "_", "_", "_"},
 	}
 	newGame.done = false
+	newGame.piecesInColumn = []int{0, 0, 0, 0, 0, 0, 0}
 	return newGame
 }
 
@@ -32,6 +34,7 @@ func addPiece(index int, piece string, game Game) Game {
 			break
 		}
 	}
+	game.piecesInColumn[index]++
 	return game
 }
 
@@ -138,6 +141,8 @@ func main() {
 			if place > 7 {
 				fmt.Println("Enter a column from 1-7")
 				continue
+			} else if g.piecesInColumn[place-1] == 6 {
+				fmt.Println("Column is full, try another column")
 			}
 			g = addPiece(place-1, "X", g)
 		} else {
@@ -147,6 +152,8 @@ func main() {
 			if place > 7 {
 				fmt.Println("Enter a column from 1-7")
 				continue
+			} else if g.piecesInColumn[place-1] == 6 {
+				fmt.Println("Column is full, try another column")
 			}
 			g = addPiece(place-1, "O", g)
 		}
