@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Game struct {
 	board [][]string
@@ -59,15 +61,29 @@ func gameWin(game Game) int {
 			}
 		}
 	}
+
+	//diagonal L-R check
+	for i := 5; i >= 3; i-- {
+		for j := 0; j <= 3; j++ {
+			currentDiag := getDiagLR(game, i, j)
+			if compare(currentDiag, "X") {
+				game.done = true
+				return 1
+			} else if compare(currentDiag, "O") {
+				game.done = true
+				return 2
+			}
+		}
+	}
 	return -1
 }
 
-func compare(slice []string, stone string) bool {
+func compare(slice []string, str string) bool {
 	if slice == nil {
 		return false
 	}
 	for _, char := range slice {
-		if char != stone {
+		if char != str {
 			return false
 		}
 	}
@@ -79,6 +95,12 @@ func getVerticalLine(game Game, col int) []string {
 	for i := 0; i < 6; i++ {
 		returnSlice = append(returnSlice, game.board[i][col])
 	}
+	return returnSlice
+}
+
+func getDiagLR(game Game, x int, y int) []string {
+	returnSlice := []string{}
+	returnSlice = append(returnSlice, game.board[x][y], game.board[x-1][y+1], game.board[x-2][y+2], game.board[x-3][y+3])
 	return returnSlice
 }
 
@@ -99,6 +121,7 @@ func main() {
 			g = addPiece(place-1, "O", g)
 		}
 		printBoard(g)
+		fmt.Println()
 		numTurns = numTurns + 1
 		player := gameWin(g)
 		if player == 1 {
@@ -109,4 +132,5 @@ func main() {
 			break
 		}
 	}
+	return
 }
