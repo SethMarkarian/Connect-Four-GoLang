@@ -32,6 +32,35 @@ func addPiece(index int, piece string, game Game) Game {
 	return game
 }
 
+func gameWin(game Game) int {
+	//horizontal check
+	for _, line := range game.board {
+		// winX := []string{"X", "X", "X", "X"}
+		for i := 0; i <= len(line)-4; i++ {
+			if compare(line[i:i+4], "X") {
+				game.done = true
+				return 1
+			} else if compare(line[i:i+4], "O") {
+				game.done = true
+				return 2
+			}
+		}
+	}
+	return -1
+}
+
+func compare(slice []string, stone string) bool {
+	if slice == nil {
+		return false
+	}
+	for _, char := range slice {
+		if char != stone {
+			return false
+		}
+	}
+	return true
+}
+
 func main() {
 	g := createGame()
 	numTurns := 0
@@ -50,5 +79,13 @@ func main() {
 		}
 		printBoard(g)
 		numTurns = numTurns + 1
+		player := gameWin(g)
+		if player == 1 {
+			fmt.Println("Player 1 Wins!")
+			break
+		} else if player == 2 {
+			fmt.Println("Player 2 Wins!")
+			break
+		}
 	}
 }
