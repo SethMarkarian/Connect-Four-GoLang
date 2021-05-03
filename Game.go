@@ -35,12 +35,25 @@ func addPiece(index int, piece string, game Game) Game {
 func gameWin(game Game) int {
 	//horizontal check
 	for _, line := range game.board {
-		// winX := []string{"X", "X", "X", "X"}
-		for i := 0; i <= len(line)-4; i++ {
+		for i := 0; i <= 7-4; i++ {
 			if compare(line[i:i+4], "X") {
 				game.done = true
 				return 1
 			} else if compare(line[i:i+4], "O") {
+				game.done = true
+				return 2
+			}
+		}
+	}
+
+	//vertical check
+	for i := 0; i < 6; i++ {
+		currentRow := getVerticalLine(game, i)
+		for j := 0; j <= 7-4; j++ {
+			if compare(currentRow[j:j+4], "X") {
+				game.done = true
+				return 1
+			} else if compare(currentRow[j:j+4], "O") {
 				game.done = true
 				return 2
 			}
@@ -59,6 +72,14 @@ func compare(slice []string, stone string) bool {
 		}
 	}
 	return true
+}
+
+func getVerticalLine(game Game, col int) []string {
+	returnSlice := []string{}
+	for i := 0; i < 6; i++ {
+		returnSlice = append(returnSlice, game.board[i][col])
+	}
+	return returnSlice
 }
 
 func main() {
