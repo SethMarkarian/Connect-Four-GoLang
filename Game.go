@@ -27,6 +27,17 @@ func printBoard(game Game) {
 	fmt.Println(" 1 2 3 4 5 6 7")
 }
 
+func boardFilled(game Game) bool {
+	isFull := true
+	for i := 0; i < 7; i++ {
+		if game.piecesInColumn[i] <= 5 {
+			isFull = false
+			break
+		}
+	}
+	return isFull
+}
+
 func addPiece(index int, piece string, game Game) Game {
 	for i := 5; i >= 0; i-- {
 		if game.board[i][index] == "_" {
@@ -160,7 +171,6 @@ func main() {
 			g = addPiece(place-1, "O", g)
 		}
 		printBoard(g)
-		fmt.Println(g.piecesInColumn)
 		fmt.Println()
 		numTurns = numTurns + 1
 		player := gameWin(g)
@@ -170,6 +180,8 @@ func main() {
 		} else if player == 2 {
 			fmt.Println("Player 2 Wins!")
 			break
+		} else if boardFilled(g) {
+			g.done = true
 		}
 	}
 	return
