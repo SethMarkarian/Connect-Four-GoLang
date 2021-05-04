@@ -141,8 +141,9 @@ func main() {
 			if place > 7 {
 				fmt.Println("Enter a column from 1-7")
 				continue
-			} else if g.piecesInColumn[place-1] == 6 {
+			} else if g.piecesInColumn[place-1] >= 6 {
 				fmt.Println("Column is full, try another column")
+				continue
 			}
 			g = addPiece(place-1, "X", g)
 		} else {
@@ -152,12 +153,14 @@ func main() {
 			if place > 7 {
 				fmt.Println("Enter a column from 1-7")
 				continue
-			} else if g.piecesInColumn[place-1] == 6 {
+			} else if g.piecesInColumn[place-1] >= 6 {
 				fmt.Println("Column is full, try another column")
+				continue
 			}
 			g = addPiece(place-1, "O", g)
 		}
 		printBoard(g)
+		fmt.Println(g.piecesInColumn)
 		fmt.Println()
 		numTurns = numTurns + 1
 		player := gameWin(g)
