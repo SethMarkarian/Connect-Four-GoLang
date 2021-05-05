@@ -64,7 +64,7 @@ func gameWin(game Game) int {
 	}
 
 	//vertical check
-	for i := 0; i < 6; i++ {
+	for i := 0; i < 7; i++ {
 		currentRow := getVerticalLine(game, i)
 		for j := 0; j <= 7-4; j++ {
 			if compare(currentRow[j:j+4], "X") {
